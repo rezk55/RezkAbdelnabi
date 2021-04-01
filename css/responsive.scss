@@ -1,0 +1,194 @@
+
+@media screen and(max-width:1024px) {
+    .header {
+        .home {
+            .effect-wrap {
+                .effect-2{
+                    bottom: 7%;
+                }
+                .effect-5 {
+                    top: 15%;
+                }
+            }
+        }
+    }
+    .contact .box {
+        width: 290px;
+    }
+}
+
+@media screen and(max-width:768px) {
+    .header {
+        .home {
+            .effect-wrap {
+                .effect-4 {
+                    top: 15%;
+                }
+                .effect-5 {
+                    top: 15%;
+                }
+            }
+            .info {
+                h2 {
+                    font-size: 45px;
+                }
+            }
+            .img {
+                img {
+                    width: 300px !important;
+                    height: 300px !important;
+                }
+            }
+        }
+    }
+    .about {
+        .box {
+            .image {
+                width: 250px;
+                height: 275px;
+            }
+        }
+        .experience, .education {
+            .timeline {
+                
+                .timeline-item {
+                  
+                    &:nth-child(even) {
+                       
+                        .timeline-item-inner .icon {
+                           top: 240px;
+                        }
+                    }
+                    .timeline-item-inner{
+                        &::before{
+                            width: 55px;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+    .services {
+        .box {
+            width: 300px;
+        }
+    }
+    .portfolio .portfolio-items .card {
+        width: 21rem !important;
+        .btn {
+            padding: 3px !important;
+            width: 100px;
+            font-size: 12px;
+        }
+    }
+    .contact .box {
+        width: 340px;
+    }
+}
+
+@media screen and(max-width:575px) {
+    .header {
+        .home {
+            .effect-wrap {
+                .effect-1,
+                .effect-2 {
+                    bottom: 5%;
+                }
+                .effect-3 {
+                    left: 25%;
+                }
+                .effect-4 {
+                    top: 13%;
+                }
+                .effect-5 {
+                    top: 40%;
+                }
+            }
+            .info {
+                margin-top: 50px;
+                h2{
+                    font-size: 30px;
+                }
+                h1 {
+                    font-size: 17px;
+                }
+            }
+            .header .home .img {
+                position: relative;
+                top: -25px;
+            }
+        }
+    }
+    .about {
+        .btns {
+            margin-left: 50px;
+            .btn-cv,
+            .btn-hire {
+                margin: 10px !important;
+            }
+        }
+        .skills {
+            .other-skills {
+                p {
+                    font-size: 14px;
+                    width: 90%;
+                }
+            }
+        }
+        .experience, .education {
+            .timeline {
+                
+                &::before {
+                    left: 25px;
+                }
+                .timeline-item {
+                    margin-left:60px;
+                    &:nth-child(odd) {
+                        .timeline-item-inner::before {
+                            left: 15px;
+                            width: 40px;
+                        }
+                    }
+                    &:nth-child(even) {
+                       
+                        .timeline-item-inner::before {
+                           left: 10px;
+                           top:285px ;
+                           width: 45px;
+                        }
+                    }
+                    .timeline-item-inner{
+                       .icon {
+                            left: 25px;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+    .services {
+        .box {
+            margin-top: 20px !important;
+        }
+    }
+    .testimonials {
+        .slider {
+            width: 350px;
+            .carousel-control-prev {
+                left: -38px !important;
+            }
+            .carousel-control-next {
+                right: -38px !important;
+            }
+        }
+    }
+    .contact .contact-form .input-group-b textarea {
+        width: 100%;
+        margin-top:20px ;
+    }
+    .contact .contact-form button {
+        margin-top: 50px;
+    }
+}

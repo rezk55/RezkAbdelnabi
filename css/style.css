@@ -680,6 +680,10 @@ body {
     right: -38px !important;
   }
 
+  .contact .box {
+    margin: 10px auto;
+  }
+
   .contact .contact-form .input-group-b textarea {
     width: 100%;
     margin-top: 20px;
@@ -687,6 +691,9 @@ body {
 
   .contact .contact-form button {
     margin-top: 50px;
+    font-size: 13px;
+    padding: 7px 10px !important;
+    width: 120px;
   }
 }
 /* start framework */

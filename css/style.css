@@ -662,6 +662,12 @@ body {
     top: 285px;
     width: 45px;
   }
+  .about .experience .timeline .timeline-item:nth-child(even) .timeline-item-inner .icon, .about .education .timeline .timeline-item:nth-child(even) .timeline-item-inner .icon {
+    top: 263px;
+  }
+  .about .experience .timeline .timeline-item .timeline-item-inner, .about .education .timeline .timeline-item .timeline-item-inner {
+    width: 290px;
+  }
   .about .experience .timeline .timeline-item .timeline-item-inner .icon, .about .education .timeline .timeline-item .timeline-item-inner .icon {
     left: 25px;
   }

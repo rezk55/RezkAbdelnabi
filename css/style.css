@@ -379,6 +379,7 @@ body {
   font-weight: 600;
 }
 .services .box p {
+  color: var(--text-black-600);
   letter-spacing: 1px;
 }
 

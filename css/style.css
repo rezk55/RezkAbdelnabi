@@ -531,7 +531,6 @@ body {
 .contact .contact-form .input-group-b textarea {
   border-radius: 30px;
   height: 100%;
-  width: 95%;
   resize: none;
 }
 .contact .contact-form button {

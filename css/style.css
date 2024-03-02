@@ -58,11 +58,9 @@ body {
 }
 .header nav .transparent .logo {
   display: inline-block;
-  text-align: center;
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  z-index: 999;
 }
 .header nav .transparent .navbar-toggler {
   position: absolute;

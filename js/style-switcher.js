@@ -46,7 +46,6 @@ $('.day-night').on('click',function(){
     $('.day-night i').toggleClass('fa-moon');
     $('body').toggleClass('dark');
     localStorage.setItem("isDark", document.querySelector('body').classList.contains('dark'));
-    console.log(localStorage.getItem("isDark"));
 })
 
 const  isDark = localStorage.getItem('isDark')
@@ -57,6 +56,9 @@ if (isDark=='true') {
 
 $(window).on('load',function(){
 
+})
+$(window).on('load',function(){
+   
     const containsDark = $('body').hasClass('dark');
 
     if(containsDark === true){

@@ -33,15 +33,13 @@ function setActiveStyle(color) {
 
 //dark or light moood
 $(".day-night").on("click", function () {
-  const isDark = document.querySelector("body").classList.contains("dark");
   $(".day-night i").toggleClass("fa-sun");
   $(".day-night i").toggleClass("fa-moon");
   $("body").toggleClass("dark");
-  localStorage.setItem("isDark", isDark);
-
-  $(".github")
-    .removeClass("text-white text-dark")
-    .addClass(isDark ? "text-dark" : "text-white");
+  localStorage.setItem(
+    "isDark",
+    document.querySelector("body").classList.contains("dark")
+  );
 });
 
 const isDark = localStorage.getItem("isDark");
@@ -50,10 +48,15 @@ if (isDark == "true") {
   $("body").addClass("dark");
 }
 
+$(window).on("load", function () {});
 $(window).on("load", function () {
   const containsDark = $("body").hasClass("dark");
 
-  $(".day-night i")
-    .removeClass("fa-sun fa-moon")
-    .addClass(containsDark ? "fa-sun" : "fa-moon");
+  if (containsDark === true) {
+    $(".day-night i").addClass("fa-sun");
+    $(".github").addClass("text-white");
+  } else {
+    $(".day-night i").addClass("fa-moon");
+    $(".github").addClass("text-dark");
+  }
 });

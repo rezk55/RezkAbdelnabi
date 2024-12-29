@@ -34,6 +34,10 @@ function setActiveStyle(color) {
 //dark or light moood
 $(".day-night").on("click", function () {
   const isDark = document.querySelector("body").classList.contains("dark");
+
+  console.log(isDark);
+  
+
   $(".day-night i").toggleClass("fa-sun");
   $(".day-night i").toggleClass("fa-moon");
   $("body").toggleClass("dark");
@@ -41,7 +45,10 @@ $(".day-night").on("click", function () {
 
   $(".github")
     .removeClass("text-white text-dark")
-    .addClass(isDark ? "text-dark" : "text-white");
+    .addClass(isDark ? "text-white" : "text-dark");
+
+    console.log( $(".github").classList);
+    
 });
 
 const isDark = localStorage.getItem("isDark");

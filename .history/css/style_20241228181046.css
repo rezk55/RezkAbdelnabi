@@ -215,9 +215,8 @@ body {
   overflow: hidden;
 }
 .about .skills .skill-item .skill-icon {
-  width: 70px;
-  height: 70px;
-  margin-inline: auto;
+  width: 50px;
+  height: 50px;
 }
 .about .skills .skill-item p {
   color: var(--text-black-600);

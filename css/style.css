@@ -14,6 +14,11 @@
   --text-black-300: #bbbbbb;
   --color1-shadow: #d0d0d0;
   --color2-shadow: #f8f8f8;
+  --bg-color: #eff0f3;
+  --success-color: #2ecc71;
+  --overlay-color: rgba(0, 0, 0, 0.5);
+  --border-radius: 20px;
+  --transition-speed: 0.4s;
 }
 
 body.dark {
@@ -41,8 +46,6 @@ body {
 .header {
   padding: 20px 15px;
   position: relative;
-  /* home start */
-  /* home end */
 }
 .header nav {
   position: fixed;
@@ -122,6 +125,9 @@ body {
 .header nav ul li a.active {
   color: var(--skin-color) !important;
 }
+.header {
+  /* home start */
+}
 .header .home .effect-wrap .effect {
   position: absolute;
   z-index: -1;
@@ -160,6 +166,9 @@ body {
   padding: 10px;
   border-radius: 50%;
   border: 10px solid transparent;
+}
+.header {
+  /* home end */
 }
 
 /* header end*/
@@ -550,6 +559,64 @@ body {
 }
 
 /*footer end */
+.modal-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay-color);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-custom .modal-content {
+  background: var(--bg-color);
+  padding: 40px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  max-width: 400px;
+  animation: slideDown var(--transition-speed) ease;
+}
+.modal-custom .modal-content .icon-box {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--success-color);
+  font-size: 25px;
+}
+.modal-custom .modal-content h4 {
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+.modal-custom .modal-content .btn-close-modal {
+  margin-top: 20px;
+  padding: 10px 30px;
+  border: none;
+  border-radius: var(--border-radius);
+  background: var(--bg-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.modal-custom .modal-content .btn-close-modal:hover {
+  transform: scale(1.05);
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 /* responsive */
 @media screen and (max-width: 1024px) {
   .header .home .effect-wrap .effect-2 {
@@ -899,6 +966,4 @@ ul {
     transform: translateY(0px);
   }
 }
-/* */
-
-/*# sourceMappingURL=style.css.map */
+/* *//*# sourceMappingURL=style.css.map */

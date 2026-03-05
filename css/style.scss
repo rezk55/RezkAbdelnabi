@@ -16,6 +16,11 @@
   --text-black-300: #bbbbbb;
   --color1-shadow: #d0d0d0;
   --color2-shadow: #f8f8f8;
+  --bg-color: #eff0f3;
+  --success-color: #2ecc71;
+  --overlay-color: rgba(0, 0, 0, 0.5);
+  --border-radius: 20px;
+  --transition-speed: 0.4s;
 }
 
 // variables in dark mood
@@ -40,19 +45,30 @@ $text-black-900: var(--text-black-900);
 $text-black-700: var(--text-black-700);
 $text-black-600: var(--text-black-600);
 $text-black-300: var(--text-black-300);
+$bg-color: var(--bg-color);
+$success-color: var(--success-color);
+$overlay-color: var(--overlay-color);
+$border-radius: var(--border-radius);
+$transition-speed: var(--transition-speed);
 
 /**************************/
 
 /* variables for shadow */
 
-$outer-shadow: 4px 4px 3px var(--color1-shadow),
+$outer-shadow:
+  4px 4px 3px var(--color1-shadow),
   -4px -4px 3px var(--color2-shadow);
-$outer-shadow-0: 0 0 0 var(--color1-shadow), 0 0 0 var(--color2-shadow);
-$inner-shadow: inset 4px 4px 3px var(--color1-shadow),
+$outer-shadow-0:
+  0 0 0 var(--color1-shadow),
+  0 0 0 var(--color2-shadow);
+$inner-shadow:
+  inset 4px 4px 3px var(--color1-shadow),
   inset -4px -4px 3px var(--color2-shadow);
-$inner-shadow: inset 4px 4px 3px var(--color1-shadow),
+$inner-shadow:
+  inset 4px 4px 3px var(--color1-shadow),
   inset -4px -4px 3px var(--color2-shadow);
-$inner-shadow-0: inset 0 0 0 var(--color1-shadow),
+$inner-shadow-0:
+  inset 0 0 0 var(--color1-shadow),
   inset 0 0 0 var(--color2-shadow);
 /************************/
 
@@ -624,6 +640,77 @@ body {
   }
 }
 /*footer end */
+
+// Pop-up (السكشن الرئيسي)
+.modal-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $overlay-color;
+  display: none; // بيتحول لـ flex عن طريق الـ JS
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  // Nesting: الـ Content جوه الـ Custom
+  .modal-content {
+    background: $bg-color;
+    padding: 40px;
+    border-radius: $border-radius;
+    text-align: center;
+    max-width: 400px;
+    animation: slideDown $transition-speed ease;
+
+    .icon-box {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $success-color;
+      font-size: 25px;
+
+      // لو حبيت تضيف الـ inner-shadow هنا
+      // box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff;
+    }
+
+    h4 {
+      margin-bottom: 10px;
+      text-transform: capitalize;
+    }
+
+    .btn-close-modal {
+      margin-top: 20px;
+      padding: 10px 30px;
+      border: none;
+      border-radius: $border-radius;
+      background: $bg-color;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        // تأثير بسيط عند الوقوف بالماوس
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+// 3. الأنميشن - Animations
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 
 /* responsive */
 @import "responsive";

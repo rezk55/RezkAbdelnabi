@@ -1,5 +1,12 @@
 const portfolio = [
     {
+        title: "New version for info sender",
+        image: "images/thumb/project-27.png",
+        category: ["category-frontend"],
+        previewLink: "https://dashboard.v2.info-sender.com",
+        codeLink: ""
+    },
+    {
         title: "Info Sender",
         image: "images/thumb/project-23.png",
         category: ["category-frontend"],
@@ -25,7 +32,7 @@ const portfolio = [
         image: "images/thumb/project-14.png",
         category: ["category-frontend"],
         previewLink: "https://growthsacademy.com/",
-        codeLink: "https://growthsacademy.com/"
+        codeLink: ""
     },
     {
         title: "Hansalhalk Medical Academy",
@@ -39,35 +46,35 @@ const portfolio = [
         image: "images/thumb/project-1.png",
         category: ["category-frontend"],
         previewLink: "https://rezk55.github.io/R-Mealify/",
-        codeLink: "https://github.com/rezk55/R-Mealify"
+        codeLink: ""
     },
     {
         title: "shop car",
         image: "images/thumb/project-2.png",
         category: ["category-frontend"],
         previewLink: "https://rezk55.github.io/TheGarage/",
-        codeLink: "https://github.com/rezk55/TheGarage"
+        codeLink: ""
     },
     {
         title: "choose your Furniture",
         image: "images/thumb/project-3.png",
         category: ["category-frontend"],
         previewLink: "https://rezk55.github.io/Furniture/",
-        codeLink: "https://github.com/rezk55/Furniture"
+        codeLink: ""
     },
     {
         title: "DeFolio",
         image: "images/thumb/project-4.png",
         category: ["category-frontend"],
         previewLink: "https://rezk55.github.io/DeFolio/",
-        codeLink: "https://github.com/rezk55/DeFolio"
+        codeLink: ""
     },
     {
         title: "Daniels",
         image: "images/thumb/project-9.png",
         category: ["category-frontend"],
         previewLink: "https://rezk55.github.io/daniels/",
-        codeLink: "https://github.com/rezk55/daniels"
+        codeLink: ""
     },
     {
         title: "MY Portfolio",
@@ -81,42 +88,42 @@ const portfolio = [
         image: "images/thumb/project-5.png",
         category: ["category-apis"],
         previewLink: "https://rezk55.github.io/TodoAndBlog/",
-        codeLink: "https://github.com/rezk55/TodoAndBlog/tree/main/src/components/Todo"
+        codeLink: ""
     },
     {
         title: "Blog",
         image: "images/thumb/project-6.png",
         category: ["category-apis"],
         previewLink: "https://rezk55.github.io/TodoAndBlog/",
-        codeLink: "https://github.com/rezk55/TodoAndBlog/tree/main/src/components/Blog"
+        codeLink: ""
     },
     {
         title: "My List(Vue and Laravel)",
         image: "images/thumb/project-7.png",
         category: ["category-backend", "category-apis"],
         previewLink: "https://rezk55.github.io/TodoApp/",
-        codeLink: "https://github.com/rezk55/TodoApp"
+        codeLink: ""
     },
     {
         title: "Your Weather",
         image: "images/thumb/project-10.png",
         category: ["category-apis"],
         previewLink: "https://rezk55.github.io/weather/",
-        codeLink: "https://github.com/rezk55/weather"
+        codeLink: ""
     },
     {
         title: "yummy",
         image: "images/thumb/project-12.png",
         category: ["category-apis"],
         previewLink: "https://rezk55.github.io/yummy/",
-        codeLink: "https://github.com/rezk55/yummy"
+        codeLink: ""
     },
     {
         title: "Binary Search in behind the scenes",
         image: "images/thumb/project-11.png",
         category: [], // لم يكن له تصنيف محدد في الكود الأصلي
         previewLink: "https://rezk55.github.io/binarySearchJS/",
-        codeLink: "https://github.com/rezk55/binarySearchJS"
+        codeLink: ""
     }
 ];
 

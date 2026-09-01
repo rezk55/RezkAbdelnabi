@@ -224,7 +224,7 @@ function initTerminal() {
 • LinkedIn: <a href="https://www.linkedin.com/in/rezk-abdelnabi-b99a31148/" target="_blank" class="term-cmd">linkedin.com/in/rezk-abdelnabi</a>`,
 
     cv: () => {
-      window.open('/cv/RezkAbdelmonem_Frontend.pdf', '_blank');
+      window.open('cv/RezkAbdelmonem_FrontendDev.pdf', '_blank');
       return `📄 Opening Resume / CV in a new tab...`;
     },
 

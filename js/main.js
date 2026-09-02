@@ -362,56 +362,6 @@ function initTerminal() {
    ========================================================================== */
 const portfolioItems = [
   {
-    title: 'Dynamic Restaurant',
-    desc: 'High-performance interactive restaurant & food ordering web app featuring dynamic menu categorization, table QR code scanning, multi-method checkout (dine-in, pickup, delivery), and robust state & form management built with Next.js, Tailwind CSS, Shadcn UI, TanStack Query, Zustand, React Hook Form, and Zod.',
-    image: 'images/thumb/restaurant-desktop.webp',
-    galleryImages: [
-      'images/thumb/restaurant-desktop.webp',
-      'images/thumb/restaurant-mobile.webp',
-      'images/thumb/restaurant-qr.webp'
-    ],
-    categories: ['enterprise', 'frontend', 'apis'],
-    tags: ['Next.js', 'Tailwind CSS', 'Shadcn UI', 'TanStack Query', 'Zustand', 'React Hook Form', 'Zod'],
-    previewLink: '',
-    codeLink: ''
-  },
-  {
-    title: 'Jinn Education',
-    desc: 'Dynamic online tutoring and educational marketplace connecting learners with top global instructors, featuring interactive subject catalogs, tutor profiles, class scheduling, and modern responsive UI built with Next.js and Tailwind CSS.',
-    image: 'images/thumb/jinn-education.webp',
-    galleryImages: [
-      'images/thumb/jinn-education.webp'
-    ],
-    categories: ['enterprise', 'frontend'],
-    tags: ['Next.js', 'Tailwind CSS', 'React', 'EdTech & Tutors'],
-    previewLink: 'https://jinnedu.com',
-    codeLink: ''
-  },
-  {
-    title: 'Houghton Insurance Brokerage',
-    desc: 'Premier insurance brokerage and risk advisory web platform operating across the GCC, featuring comprehensive corporate & personal policy portfolios, quote request flows, and responsive UI built with Next.js and Tailwind CSS.',
-    image: 'images/thumb/houghton-insurance.webp',
-    galleryImages: [
-      'images/thumb/houghton-insurance.webp'
-    ],
-    categories: ['enterprise', 'frontend'],
-    tags: ['Next.js', 'Tailwind CSS', 'React', 'Insurance & FinTech'],
-    previewLink: 'https://houghtoninsure.com',
-    codeLink: ''
-  },
-  {
-    title: 'عيادات توجه الطبية (Tawajjuh Medical Clinic)',
-    desc: 'Modern healthcare & aesthetic clinic web application featuring specialized cosmetic laser, skincare treatment portfolios, appointment booking flows, and high-performance responsive UI built with Next.js, Tailwind CSS, and Shadcn UI.',
-    image: 'images/thumb/tawajjuh-clinic.webp',
-    galleryImages: [
-      'images/thumb/tawajjuh-clinic.webp'
-    ],
-    categories: ['enterprise', 'frontend'],
-    tags: ['Next.js', 'Tailwind CSS', 'Shadcn UI', 'React', 'Healthcare'],
-    previewLink: 'https://tawajjuh-clinic.sa/',
-    codeLink: ''
-  },
-  {
     title: 'New version for info sender',
     desc: 'Next-generation enterprise messaging and marketing automation platform (V2) featuring multi-channel messaging, interactive bot builders, real-time analytics, live chat, and e-commerce integrations (Salla, Zid).',
     image: 'images/thumb/project-27.webp',
@@ -442,35 +392,6 @@ const portfolioItems = [
     codeLink: ''
   },
   {
-    title: 'Info Sender API Docs',
-    desc: 'Interactive developer documentation portal with live endpoints testing, code snippet generators, and responsive dark UX.',
-    image: 'images/thumb/project-26.webp',
-    galleryImages: [
-      'images/thumb/project-26.webp',
-      'images/thumb/infosender-docs-overview.webp',
-      'images/thumb/infosender-docs-generate-key.webp'
-    ],
-    categories: ['frontend'],
-    tags: ['React', 'API Docs', 'Tailwind CSS', 'Interactive Runner', 'docusaurus'],
-    previewLink: 'https://infofronttest.nasatechnology.net/docs/',
-    codeLink: ''
-  },
-  {
-    title: 'Hansalhalk Medical Academy',
-    desc: 'Specialized medical equipment maintenance & healthcare training platform (Medoxa) featuring dynamic course catalogs, interactive video modules, instructor profiles, and student learning dashboards.',
-    image: 'images/thumb/project-25.webp',
-    galleryImages: [
-      'images/thumb/project-25.webp',
-      'images/thumb/medacademy-courses.webp',
-      'images/thumb/medacademy-course-detail.webp',
-      'images/thumb/medacademy-student-dashboard.webp'
-    ],
-    categories: ['frontend', 'enterprise'],
-    tags: ['React', 'MUI', 'REST APIs', 'Medical EdTech'],
-    previewLink: 'https://hansalhalkmedacademy.com/',
-    codeLink: ''
-  },
-  {
     title: 'عون المعلم (Awn Al-Moallem)',
     desc: 'Comprehensive educational SaaS platform & teacher assistance ecosystem featuring interactive classrooms, smart preparation tools, student performance tracking, and subscription management.',
     image: 'images/thumb/project-24.webp',
@@ -485,6 +406,85 @@ const portfolioItems = [
     categories: ['enterprise', 'frontend'],
     tags: ['React', 'Redux Toolkit', 'Bootstrap', 'REST APIs'],
     previewLink: 'https://aboda7m01-001-site3.rtempurl.com/home/subscriptions',
+    codeLink: ''
+  },
+   {
+    title: 'Hansalhalk Medical Academy',
+    desc: 'Specialized medical equipment maintenance & healthcare training platform (Medoxa) featuring dynamic course catalogs, interactive video modules, instructor profiles, and student learning dashboards.',
+    image: 'images/thumb/project-25.webp',
+    galleryImages: [
+      'images/thumb/project-25.webp',
+      'images/thumb/medacademy-courses.webp',
+      'images/thumb/medacademy-course-detail.webp',
+      'images/thumb/medacademy-student-dashboard.webp'
+    ],
+    categories: ['frontend', 'enterprise'],
+    tags: ['React', 'MUI', 'REST APIs', 'Medical EdTech'],
+    previewLink: 'https://hansalhalkmedacademy.com/',
+    codeLink: ''
+  },
+   {
+    title: 'عيادات توجه الطبية (Tawajjuh Medical Clinic)',
+    desc: 'Modern healthcare & aesthetic clinic web application featuring specialized cosmetic laser, skincare treatment portfolios, appointment booking flows, and high-performance responsive UI built with Next.js, Tailwind CSS, and Shadcn UI.',
+    image: 'images/thumb/tawajjuh-clinic.webp',
+    galleryImages: [
+      'images/thumb/tawajjuh-clinic.webp'
+    ],
+    categories: ['enterprise', 'frontend'],
+    tags: ['Next.js', 'Tailwind CSS', 'Shadcn UI', 'React', 'Healthcare'],
+    previewLink: 'https://tawajjuh-clinic.sa/',
+    codeLink: ''
+  },
+  {
+    title: 'Dynamic Restaurant',
+    desc: 'High-performance interactive restaurant & food ordering web app featuring dynamic menu categorization, table QR code scanning, multi-method checkout (dine-in, pickup, delivery), and robust state & form management built with Next.js, Tailwind CSS, Shadcn UI, TanStack Query, Zustand, React Hook Form, and Zod.',
+    image: 'images/thumb/restaurant-desktop.webp',
+    galleryImages: [
+      'images/thumb/restaurant-desktop.webp',
+      'images/thumb/restaurant-mobile.webp',
+      'images/thumb/restaurant-qr.webp'
+    ],
+    categories: ['enterprise', 'frontend', 'apis'],
+    tags: ['Next.js', 'Tailwind CSS', 'Shadcn UI', 'TanStack Query', 'Zustand', 'React Hook Form', 'Zod'],
+    previewLink: '',
+    codeLink: ''
+  },
+  {
+    title: 'Jinn Education',
+    desc: 'Dynamic online tutoring and educational marketplace connecting learners with top global instructors, featuring interactive subject catalogs, tutor profiles, class scheduling, and modern responsive UI built with Next.js and Tailwind CSS.',
+    image: 'images/thumb/jinn-education.webp',
+    galleryImages: [
+      'images/thumb/jinn-education.webp'
+    ],
+    categories: ['enterprise', 'frontend'],
+    tags: ['Next.js', 'Tailwind CSS', 'React', 'EdTech & Tutors'],
+    previewLink: 'https://jinnedu.com',
+    codeLink: ''
+  },
+   {
+    title: 'Info Sender API Docs',
+    desc: 'Interactive developer documentation portal with live endpoints testing, code snippet generators, and responsive dark UX.',
+    image: 'images/thumb/project-26.webp',
+    galleryImages: [
+      'images/thumb/project-26.webp',
+      'images/thumb/infosender-docs-overview.webp',
+      'images/thumb/infosender-docs-generate-key.webp'
+    ],
+    categories: ['frontend'],
+    tags: ['React', 'API Docs', 'Tailwind CSS', 'Interactive Runner', 'docusaurus'],
+    previewLink: 'https://infofronttest.nasatechnology.net/docs/',
+    codeLink: ''
+  },
+  {
+    title: 'Houghton Insurance Brokerage',
+    desc: 'Premier insurance brokerage and risk advisory web platform operating across the GCC, featuring comprehensive corporate & personal policy portfolios, quote request flows, and responsive UI built with Next.js and Tailwind CSS.',
+    image: 'images/thumb/houghton-insurance.webp',
+    galleryImages: [
+      'images/thumb/houghton-insurance.webp'
+    ],
+    categories: ['enterprise', 'frontend'],
+    tags: ['Next.js', 'Tailwind CSS', 'React', 'Insurance & FinTech'],
+    previewLink: 'https://houghtoninsure.com',
     codeLink: ''
   },
   {

@@ -6,23 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Primary SEO Meta Tags -->
-    <title>Rezk Abdelnabi | Frontend Developer & UI/UX Engineer</title>
-    <meta
-      name="title"
-      content="Rezk Abdelnabi | Frontend Developer & UI/UX Engineer"
-    />
+    <title>Rezk Abdelnabi | Frontend Developer</title>
+    <meta name="title" content="Rezk Abdelnabi | Frontend Developer" />
     <meta
       name="description"
       content="Frontend Developer with 2+ years of experience specializing in React.js, Next.js, TypeScript, Tailwind CSS, high-performance web applications, and enterprise UI/UX design."
     />
     <meta
       name="keywords"
-      content="Rezk Abdelnabi, RezCoder, Frontend Developer, React Developer, Next.js Developer, UI/UX Engineer, JavaScript, TypeScript, Web Development, Portfolio"
+      content="Rezk Abdelnabi, RezCoder, Frontend Developer, React Developer, Next.js Developer, JavaScript, TypeScript, Web Development, Portfolio"
     />
     <meta name="author" content="Rezk Abdelnabi" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://rezk55.github.io/" />
-    <link rel="shortcut icon" href="images/logo.png" type="image/png" />
+    <link rel="shortcut icon" href="images/logo.webp" type="image/webp" />
+    <link rel="preload" as="image" href="images/avatar-animated.webp" type="image/webp" fetchpriority="high" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -32,7 +30,7 @@
       property="og:description"
       content="Crafting ultra-modern, lightning-fast digital web experiences with React, Next.js, and TypeScript."
     />
-    <meta property="og:image" content="images/profile-pic.png" />
+    <meta property="og:image" content="images/profile-pic.webp" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -42,7 +40,7 @@
       name="twitter:description"
       content="Crafting ultra-modern, lightning-fast digital web experiences with React, Next.js, and TypeScript."
     />
-    <meta name="twitter:image" content="images/profile-pic.png" />
+    <meta name="twitter:image" content="images/profile-pic.webp" />
 
     <!-- Schema.org JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -52,7 +50,7 @@
         "name": "Rezk Abdelnabi",
         "alternateName": "RezCoder",
         "url": "https://rezk55.github.io/",
-        "image": "images/profile-pic.png",
+        "image": "images/profile-pic.webp",
         "jobTitle": "Frontend Developer",
         "worksFor": {
           "@type": "Organization",
@@ -309,12 +307,16 @@
                 <div class="avatar-ring avatar-ring-outer"></div>
                 <div class="avatar-ring avatar-ring-inner"></div>
                 <div class="avatar-glow"></div>
-                
+
                 <div class="profile-img-wrapper">
                   <img
-                    src="images/avatar-animated.jpg"
+                    src="images/avatar-animated.webp"
                     alt="Rezk Abdelnabi - Frontend Engineer"
                     class="profile-img animated-avatar"
+                    width="220"
+                    height="220"
+                    decoding="async"
+                    fetchpriority="high"
                   />
                 </div>
 
@@ -930,6 +932,11 @@
 
           <!-- Dynamic Projects Grid -->
           <div class="projects-grid" id="projects-container">
+            <!-- Rendered dynamically by js/main.js -->
+          </div>
+
+          <!-- Dynamic Load More / Show Less Controls -->
+          <div class="portfolio-load-more" id="portfolio-load-more" style="display: flex; justify-content: center; margin-top: 3rem;">
             <!-- Rendered dynamically by js/main.js -->
           </div>
         </div>

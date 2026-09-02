@@ -1,6 +1,6 @@
 /**
  * RezCoder - Next-Generation Developer Portfolio Engine
- * Pure Vanilla Modern JavaScript (Zero Bloat, 60fps Performance)
+ * Pure Vanilla Modern JavaScript (Staff Engineer Quality, Zero Bloat, 60fps Performance)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -45,40 +45,66 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ==========================================================================
-   1. Ambient Dynamic Particle Canvas
+   Utilities & Performance Helpers
+   ========================================================================== */
+function debounce(fn, delay = 150) {
+  let timer = null;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/* ==========================================================================
+   1. Ambient Dynamic Particle Canvas (Lifecycle & Battery Optimized)
    ========================================================================== */
 function initAmbientCanvas() {
   const canvas = document.getElementById('ambient-canvas');
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let width, height;
+
+  // Respect user preference for reduced motion
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    canvas.style.display = 'none';
+    return;
+  }
+
+  const ctx = canvas.getContext('2d', { alpha: true });
+  let width = 0;
+  let height = 0;
   let particles = [];
-  let mouse = { x: null, y: null, radius: 150 };
+  let animId = null;
+  let isRunning = false;
+  let mouse = { x: null, y: null, radius: 140 };
 
   function resize() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
+    createParticles();
   }
-  window.addEventListener('resize', resize);
-  resize();
+
+  window.addEventListener('resize', debounce(resize, 200), { passive: true });
 
   window.addEventListener('mousemove', (e) => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
-  });
+  }, { passive: true });
 
   window.addEventListener('mouseout', () => {
     mouse.x = null;
     mouse.y = null;
-  });
+  }, { passive: true });
 
   class Particle {
     constructor() {
       this.x = Math.random() * width;
       this.y = Math.random() * height;
-      this.vx = (Math.random() - 0.5) * 0.6;
-      this.vy = (Math.random() - 0.5) * 0.6;
-      this.radius = Math.random() * 1.8 + 0.5;
+      this.vx = (Math.random() - 0.5) * 0.5;
+      this.vy = (Math.random() - 0.5) * 0.5;
+      this.radius = Math.random() * 1.6 + 0.6;
     }
     update() {
       this.x += this.vx;
@@ -86,56 +112,100 @@ function initAmbientCanvas() {
       if (this.x < 0 || this.x > width) this.vx *= -1;
       if (this.y < 0 || this.y > height) this.vy *= -1;
 
-      // Mouse repulsion/interaction
       if (mouse.x !== null && mouse.y !== null) {
-        let dx = mouse.x - this.x;
-        let dy = mouse.y - this.y;
-        let dist = Math.hypot(dx, dy);
-        if (dist < mouse.radius) {
-          let force = (mouse.radius - dist) / mouse.radius;
-          this.x -= (dx / dist) * force * 2;
-          this.y -= (dy / dist) * force * 2;
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < mouse.radius && dist > 0) {
+          const force = (mouse.radius - dist) / mouse.radius;
+          this.x -= (dx / dist) * force * 1.8;
+          this.y -= (dy / dist) * force * 1.8;
         }
       }
     }
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
       ctx.fill();
     }
   }
 
-  const particleCount = Math.min(Math.floor((width * height) / 16000), 65);
-  for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
+  function createParticles() {
+    particles = [];
+    const isMobile = window.innerWidth < 768;
+    const baseCount = isMobile ? 22 : Math.min(Math.floor((width * height) / 18000), 55);
+    for (let i = 0; i < baseCount; i++) {
+      particles.push(new Particle());
+    }
   }
 
-  function animate() {
+  function renderFrame() {
+    if (!isRunning) return;
     ctx.clearRect(0, 0, width, height);
 
-    for (let i = 0; i < particles.length; i++) {
+    const len = particles.length;
+    for (let i = 0; i < len; i++) {
       particles[i].update();
       particles[i].draw();
 
-      for (let j = i + 1; j < particles.length; j++) {
-        let dx = particles[i].x - particles[j].x;
-        let dy = particles[i].y - particles[j].y;
-        let dist = Math.hypot(dx, dy);
+      for (let j = i + 1; j < len; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.hypot(dx, dy);
 
-        if (dist < 110) {
+        if (dist < 105) {
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(100, 200, 255, ${0.15 * (1 - dist / 110)})`;
-          ctx.lineWidth = 0.6;
+          ctx.strokeStyle = `rgba(100, 200, 255, ${0.14 * (1 - dist / 105)})`;
+          ctx.lineWidth = 0.55;
           ctx.stroke();
         }
       }
     }
-    requestAnimationFrame(animate);
+    animId = requestAnimationFrame(renderFrame);
   }
-  animate();
+
+  function start() {
+    if (!isRunning) {
+      isRunning = true;
+      animId = requestAnimationFrame(renderFrame);
+    }
+  }
+
+  function stop() {
+    isRunning = false;
+    if (animId) {
+      cancelAnimationFrame(animId);
+      animId = null;
+    }
+  }
+
+  // Sleep canvas when tab is backgrounded
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stop();
+    } else {
+      start();
+    }
+  });
+
+  // Pause canvas when scrolled far below hero section
+  const heroSection = document.getElementById('home');
+  if (heroSection && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        start();
+      } else {
+        stop();
+      }
+    }, { threshold: 0.05 });
+    observer.observe(heroSection);
+  }
+
+  resize();
+  start();
 }
 
 /* ==========================================================================
@@ -169,11 +239,11 @@ function initTypewriter() {
 
     if (!isDeleting && charIdx === currentRole.length) {
       isDeleting = true;
-      typingSpeed = 2000; // Pause at end of word
+      typingSpeed = 2000;
     } else if (isDeleting && charIdx === 0) {
       isDeleting = false;
       roleIdx = (roleIdx + 1) % roles.length;
-      typingSpeed = 400; // Pause before new word
+      typingSpeed = 400;
     }
 
     setTimeout(type, typingSpeed);
@@ -206,10 +276,12 @@ function initTerminal() {
 • <span class="term-cmd">Architecture:</span> Clean Code, Performance Optimization, Web Vitals, Git`,
 
     projects: () => `💼 <span class="term-highlight">Featured Production Work:</span>
-1. <b>Info Sender Dashboard</b> (React, TanStack, Tailwind) - Enterprise WhatsApp & Campaign platform
-2. <b>Info Sender API Docs</b> - High-performance interactive developer documentation
-3. <b>عون المعلم</b> - Advanced Educational SaaS Platform
-4. <b>Growth Academy & Hansalhalk Medical Academy</b> - Interactive portals`,
+1. <b>Dynamic Restaurant</b> (Next.js, Shadcn, TanStack, Zustand, Zod) - Restaurant & QR Ordering Web Platform
+2. <b>Jinn Education</b> (Next.js, Tailwind CSS) - Global Online Tutoring & EdTech Marketplace
+3. <b>Houghton Insurance Brokerage</b> (Next.js, Tailwind CSS) - Insurance & Risk Advisory Platform
+4. <b>عيادات توجه الطبية</b> (Next.js, Tailwind CSS, Shadcn UI) - Medical & Aesthetic Clinic Platform
+5. <b>Info Sender Dashboard (V1 & V2)</b> (React, TanStack, Tailwind) - Enterprise WhatsApp & Campaign platform
+6. <b>Info Sender API Docs</b> - High-performance interactive developer documentation`,
 
     experience: () => `🏢 <span class="term-highlight">Career Journey:</span>
 • <span class="term-cmd">Frontend Developer</span> @ Infosender (Saudi Arabia, Remote) [Jun 2024 - Present]
@@ -285,26 +357,72 @@ function initTerminal() {
   });
 }
 
-function escapeHtml(str) {
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-}
-
 /* ==========================================================================
-   4. Portfolio Catalog & Filter Engine
+   4. Portfolio Catalog & Filter Engine (WebP Optimized)
    ========================================================================== */
 const portfolioItems = [
   {
-    title: 'New version for info sender',
-    desc: 'Next-generation enterprise messaging and marketing automation platform (V2) featuring multi-channel messaging, interactive bot builders, real-time analytics, live chat, and e-commerce integrations (Salla, Zid).',
-    image: 'images/thumb/project-27.png',
+    title: 'Dynamic Restaurant',
+    desc: 'High-performance interactive restaurant & food ordering web app featuring dynamic menu categorization, table QR code scanning, multi-method checkout (dine-in, pickup, delivery), and robust state & form management built with Next.js, Tailwind CSS, Shadcn UI, TanStack Query, Zustand, React Hook Form, and Zod.',
+    image: 'images/thumb/restaurant-desktop.webp',
     galleryImages: [
-      'images/thumb/project-27.png',
-      'images/thumb/infosender-v2-chat.png',
-      'images/thumb/infosender-v2-integrations.png',
-      'images/thumb/infosender-v2-login-ar.png',
-      'images/thumb/infosender-v2-login-en.png'
+      'images/thumb/restaurant-desktop.webp',
+      'images/thumb/restaurant-mobile.webp',
+      'images/thumb/restaurant-qr.webp'
     ],
     categories: ['enterprise', 'frontend', 'apis'],
+    tags: ['Next.js', 'Tailwind CSS', 'Shadcn UI', 'TanStack Query', 'Zustand', 'React Hook Form', 'Zod'],
+    previewLink: '',
+    codeLink: ''
+  },
+  {
+    title: 'Jinn Education',
+    desc: 'Dynamic online tutoring and educational marketplace connecting learners with top global instructors, featuring interactive subject catalogs, tutor profiles, class scheduling, and modern responsive UI built with Next.js and Tailwind CSS.',
+    image: 'images/thumb/jinn-education.webp',
+    galleryImages: [
+      'images/thumb/jinn-education.webp'
+    ],
+    categories: ['enterprise', 'frontend'],
+    tags: ['Next.js', 'Tailwind CSS', 'React', 'EdTech & Tutors'],
+    previewLink: 'https://jinnedu.com',
+    codeLink: ''
+  },
+  {
+    title: 'Houghton Insurance Brokerage',
+    desc: 'Premier insurance brokerage and risk advisory web platform operating across the GCC, featuring comprehensive corporate & personal policy portfolios, quote request flows, and responsive UI built with Next.js and Tailwind CSS.',
+    image: 'images/thumb/houghton-insurance.webp',
+    galleryImages: [
+      'images/thumb/houghton-insurance.webp'
+    ],
+    categories: ['enterprise', 'frontend'],
+    tags: ['Next.js', 'Tailwind CSS', 'React', 'Insurance & FinTech'],
+    previewLink: 'https://houghtoninsure.com',
+    codeLink: ''
+  },
+  {
+    title: 'عيادات توجه الطبية (Tawajjuh Medical Clinic)',
+    desc: 'Modern healthcare & aesthetic clinic web application featuring specialized cosmetic laser, skincare treatment portfolios, appointment booking flows, and high-performance responsive UI built with Next.js, Tailwind CSS, and Shadcn UI.',
+    image: 'images/thumb/tawajjuh-clinic.webp',
+    galleryImages: [
+      'images/thumb/tawajjuh-clinic.webp'
+    ],
+    categories: ['enterprise', 'frontend'],
+    tags: ['Next.js', 'Tailwind CSS', 'Shadcn UI', 'React', 'Healthcare'],
+    previewLink: 'https://tawajjuh-clinic.sa/',
+    codeLink: ''
+  },
+  {
+    title: 'New version for info sender',
+    desc: 'Next-generation enterprise messaging and marketing automation platform (V2) featuring multi-channel messaging, interactive bot builders, real-time analytics, live chat, and e-commerce integrations (Salla, Zid).',
+    image: 'images/thumb/project-27.webp',
+    galleryImages: [
+      'images/thumb/project-27.webp',
+      'images/thumb/infosender-v2-chat.webp',
+      'images/thumb/infosender-v2-integrations.webp',
+      'images/thumb/infosender-v2-login-ar.webp',
+      'images/thumb/infosender-v2-login-en.webp'
+    ],
+    categories: ['enterprise', 'frontend'],
     tags: ['React', 'TypeScript', 'TanStack Query', 'Tailwind CSS', 'SaaS V2'],
     previewLink: 'https://dashboard.v2.info-sender.com',
     codeLink: ''
@@ -312,13 +430,13 @@ const portfolioItems = [
   {
     title: 'Info Sender Dashboard',
     desc: 'High-impact enterprise SaaS dashboard for multi-channel business messaging, automated campaign bots, and WhatsApp preview.',
-    image: 'images/thumb/project-23.png',
+    image: 'images/thumb/project-23.webp',
     galleryImages: [
-      'images/thumb/project-23.png',
-      'images/thumb/infosender-v1-apps.png',
-      'images/thumb/infosender-v1-login.png'
+      'images/thumb/project-23.webp',
+      'images/thumb/infosender-v1-apps.webp',
+      'images/thumb/infosender-v1-login.webp'
     ],
-    categories: ['enterprise', 'frontend', 'apis'],
+    categories: ['enterprise', 'frontend'],
     tags: ['React', 'TanStack Query', 'Tailwind CSS', 'Redux'],
     previewLink: 'https://dashboard.info-sender.com/',
     codeLink: ''
@@ -326,21 +444,44 @@ const portfolioItems = [
   {
     title: 'Info Sender API Docs',
     desc: 'Interactive developer documentation portal with live endpoints testing, code snippet generators, and responsive dark UX.',
-    image: 'images/thumb/project-26.png',
+    image: 'images/thumb/project-26.webp',
     galleryImages: [
-      'images/thumb/project-26.png',
-      'images/thumb/infosender-docs-overview.png',
-      'images/thumb/infosender-docs-generate-key.png'
+      'images/thumb/project-26.webp',
+      'images/thumb/infosender-docs-overview.webp',
+      'images/thumb/infosender-docs-generate-key.webp'
     ],
-    categories: ['frontend', 'apis'],
+    categories: ['frontend'],
     tags: ['React', 'API Docs', 'Tailwind CSS', 'Interactive Runner', 'docusaurus'],
     previewLink: 'https://infofronttest.nasatechnology.net/docs/',
     codeLink: ''
   },
   {
+    title: 'Hansalhalk Medical Academy',
+    desc: 'Specialized medical equipment maintenance & healthcare training platform (Medoxa) featuring dynamic course catalogs, interactive video modules, instructor profiles, and student learning dashboards.',
+    image: 'images/thumb/project-25.webp',
+    galleryImages: [
+      'images/thumb/project-25.webp',
+      'images/thumb/medacademy-courses.webp',
+      'images/thumb/medacademy-course-detail.webp',
+      'images/thumb/medacademy-student-dashboard.webp'
+    ],
+    categories: ['frontend', 'enterprise'],
+    tags: ['React', 'MUI', 'REST APIs', 'Medical EdTech'],
+    previewLink: 'https://hansalhalkmedacademy.com/',
+    codeLink: ''
+  },
+  {
     title: 'عون المعلم (Awn Al-Moallem)',
-    desc: 'Comprehensive educational platform & subscription portal for teachers and students with dynamic course management.',
-    image: 'images/thumb/project-24.png',
+    desc: 'Comprehensive educational SaaS platform & teacher assistance ecosystem featuring interactive classrooms, smart preparation tools, student performance tracking, and subscription management.',
+    image: 'images/thumb/project-24.webp',
+    galleryImages: [
+      'images/thumb/project-24.webp',
+      'images/thumb/awn-classes.webp',
+      'images/thumb/awn-admin-dashboard.webp',
+      'images/thumb/awn-evidence.webp',
+      'images/thumb/awn-interactive-board.webp',
+      'images/thumb/awn-login.webp'
+    ],
     categories: ['enterprise', 'frontend'],
     tags: ['React', 'Redux Toolkit', 'Bootstrap', 'REST APIs'],
     previewLink: 'https://aboda7m01-001-site3.rtempurl.com/home/subscriptions',
@@ -349,11 +490,11 @@ const portfolioItems = [
   {
     title: 'Growth Academy',
     desc: 'Modern e-learning and career training web platform with interactive curriculum, student analytics dashboard, video course player, and modern UI aesthetics.',
-    image: 'images/thumb/project-14.png',
+    image: 'images/thumb/project-14.webp',
     galleryImages: [
-      'images/thumb/project-14.png',
-      'images/thumb/growth-academy-dashboard.png',
-      'images/thumb/growth-academy-courses.png'
+      'images/thumb/project-14.webp',
+      'images/thumb/growth-academy-dashboard.webp',
+      'images/thumb/growth-academy-courses.webp'
     ],
     categories: ['frontend', 'enterprise'],
     tags: ['React', 'Next.js', 'Tailwind CSS', 'E-Learning'],
@@ -361,24 +502,9 @@ const portfolioItems = [
     codeLink: ''
   },
   {
-    title: 'Hansalhalk Medical Academy',
-    desc: 'Specialized medical equipment maintenance & healthcare training platform (Medoxa) featuring dynamic course catalogs, interactive video modules, instructor profiles, and student learning dashboards.',
-    image: 'images/thumb/project-25.png',
-    galleryImages: [
-      'images/thumb/project-25.png',
-      'images/thumb/medacademy-courses.png',
-      'images/thumb/medacademy-course-detail.png',
-      'images/thumb/medacademy-student-dashboard.png'
-    ],
-    categories: ['frontend', 'enterprise'],
-    tags: ['React', 'MUI', 'REST APIs', 'Medical EdTech'],
-    previewLink: 'https://hansalhalkmedacademy.com/',
-    codeLink: ''
-  },
-  {
     title: 'Mealify - Delicious Gastronomy',
     desc: 'Gourmet restaurant web experience with interactive culinary menus, smooth micro-interactions, and booking flows.',
-    image: 'images/thumb/project-1.png',
+    image: 'images/thumb/project-1.webp',
     categories: ['frontend'],
     tags: ['HTML5', 'CSS3', 'JavaScript', 'Responsive'],
     previewLink: 'https://rezk55.github.io/R-Mealify/',
@@ -387,7 +513,7 @@ const portfolioItems = [
   {
     title: 'The Garage - Auto Showcase',
     desc: 'Automotive dealership and luxury car catalog with dynamic filtering, high-resolution media galleries, and specs comparison.',
-    image: 'images/thumb/project-2.png',
+    image: 'images/thumb/project-2.webp',
     categories: ['frontend'],
     tags: ['JavaScript', 'Sass', 'CSS Grid'],
     previewLink: 'https://rezk55.github.io/TheGarage/',
@@ -396,7 +522,7 @@ const portfolioItems = [
   {
     title: 'Modern Furniture Store',
     desc: 'Sleek e-commerce shopping experience with interactive room customizer, product catalog, and responsive shopping cart.',
-    image: 'images/thumb/project-3.png',
+    image: 'images/thumb/project-3.webp',
     categories: ['frontend'],
     tags: ['HTML5', 'CSS3', 'JavaScript'],
     previewLink: 'https://rezk55.github.io/Furniture/',
@@ -405,7 +531,7 @@ const portfolioItems = [
   {
     title: 'DeFolio Modern Creative',
     desc: 'Award-style portfolio theme with bold typography, dynamic hover cards, and seamless responsive layout.',
-    image: 'images/thumb/project-4.png',
+    image: 'images/thumb/project-4.webp',
     categories: ['frontend'],
     tags: ['JavaScript', 'CSS3 Animations', 'Bootstrap'],
     previewLink: 'https://rezk55.github.io/DeFolio/',
@@ -414,7 +540,7 @@ const portfolioItems = [
   {
     title: 'Daniels Portfolio',
     desc: 'Minimalist creative portfolio template featuring dark/light aesthetic, filterable project gallery, and touch-optimized navigation.',
-    image: 'images/thumb/project-9.png',
+    image: 'images/thumb/project-9.webp',
     categories: ['frontend'],
     tags: ['JavaScript', 'Sass', 'Responsive'],
     previewLink: 'https://rezk55.github.io/daniels/',
@@ -423,7 +549,7 @@ const portfolioItems = [
   {
     title: 'Productivity Todo & Tech Blog',
     desc: 'Multi-feature fullstack client with real-time CRUD operations, categorization, tag filtering, and article reader.',
-    image: 'images/thumb/project-5.png',
+    image: 'images/thumb/project-5.webp',
     categories: ['apis', 'fullstack', 'frontend'],
     tags: ['Vue.js', 'REST APIs', 'Axios', 'State Management'],
     previewLink: 'https://rezk55.github.io/TodoAndBlog/',
@@ -432,7 +558,7 @@ const portfolioItems = [
   {
     title: 'My List (Vue.js & Laravel API)',
     desc: 'Fullstack task & workflow orchestration engine powered by Vue reactive components and a Laravel backend API.',
-    image: 'images/thumb/project-7.png',
+    image: 'images/thumb/project-7.webp',
     categories: ['fullstack', 'apis'],
     tags: ['Vue.js', 'Laravel API', 'REST', 'Tailwind'],
     previewLink: 'https://rezk55.github.io/TodoApp/',
@@ -441,7 +567,7 @@ const portfolioItems = [
   {
     title: 'Real-Time Global Weather App',
     desc: 'Live atmospheric weather forecasting client utilizing geolocation, 3-day radar, wind metrics, and dynamic background weather changes.',
-    image: 'images/thumb/project-10.png',
+    image: 'images/thumb/project-10.webp',
     categories: ['apis', 'frontend'],
     tags: ['JavaScript', 'Weather API', 'Async/Await'],
     previewLink: 'https://rezk55.github.io/weather/',
@@ -450,7 +576,7 @@ const portfolioItems = [
   {
     title: 'Yummy - Global Recipe Engine',
     desc: 'Interactive food & culinary recipe discovery platform with ingredient search, country-specific cuisines, and video guides.',
-    image: 'images/thumb/project-12.png',
+    image: 'images/thumb/project-12.webp',
     categories: ['apis', 'frontend'],
     tags: ['JavaScript', 'MealDB API', 'Sass'],
     previewLink: 'https://rezk55.github.io/yummy/',
@@ -458,8 +584,8 @@ const portfolioItems = [
   },
   {
     title: 'Binary Search Algorithm Visualizer',
-    desc: 'Visual computational tool demonstrating time complexity $O(\\log N)$, array partitioning, and pointers in real-time.',
-    image: 'images/thumb/project-11.png',
+    desc: 'Visual computational tool demonstrating time complexity O(log N), array partitioning, and pointers in real-time.',
+    image: 'images/thumb/project-11.webp',
     categories: ['frontend'],
     tags: ['Algorithms', 'Data Structures', 'JavaScript Canvas'],
     previewLink: 'https://rezk55.github.io/binarySearchJS/',
@@ -471,15 +597,19 @@ function initPortfolio() {
   const container = document.getElementById('projects-container');
   const searchInput = document.getElementById('project-search');
   const filterPills = document.querySelectorAll('.filter-pill');
+  const loadMoreContainer = document.getElementById('portfolio-load-more');
   if (!container) return;
 
+  const ITEMS_PER_PAGE = 6;
+  let visibleCount = ITEMS_PER_PAGE;
   let activeCategory = 'all';
   let searchQuery = '';
 
   function render() {
     const filtered = portfolioItems.filter(item => {
       const matchesCategory = activeCategory === 'all' || item.categories.includes(activeCategory);
-      const matchesSearch = item.title.toLowerCase().includes(searchQuery) ||
+      const matchesSearch = !searchQuery ||
+                            item.title.toLowerCase().includes(searchQuery) ||
                             item.desc.toLowerCase().includes(searchQuery) ||
                             item.tags.some(tag => tag.toLowerCase().includes(searchQuery));
       return matchesCategory && matchesSearch;
@@ -489,29 +619,40 @@ function initPortfolio() {
       container.innerHTML = `
         <div class="col-span-full text-center py-12" style="grid-column: 1 / -1; padding: 4rem 1rem;">
           <p style="font-size: 1.15rem; color: var(--text-muted); margin-bottom: 1rem;">No matching projects found for "${escapeHtml(searchQuery)}".</p>
-          <button class="btn-secondary" onclick="document.getElementById('project-search').value = ''; document.getElementById('project-search').dispatchEvent(new Event('input'));">Reset Search</button>
+          <button class="btn-secondary" id="btn-reset-search">Reset Search</button>
         </div>
       `;
+      const btnReset = document.getElementById('btn-reset-search');
+      if (btnReset && searchInput) {
+        btnReset.addEventListener('click', () => {
+          searchInput.value = '';
+          searchQuery = '';
+          render();
+        });
+      }
+      if (loadMoreContainer) loadMoreContainer.innerHTML = '';
       return;
     }
 
-    container.innerHTML = filtered.map((item) => {
+    const visibleItems = filtered.slice(0, visibleCount);
+
+    container.innerHTML = visibleItems.map((item) => {
       const originalIdx = portfolioItems.indexOf(item);
       return `
       <div class="glass-card spotlight-card project-card">
         <div class="project-thumbnail">
-          <img src="${item.image}" alt="${item.title}" class="project-img" loading="lazy">
+          <img src="${item.image}" alt="${escapeHtml(item.title)}" class="project-img" width="400" height="250" loading="lazy" decoding="async">
           <div class="project-overlay"></div>
-          <span class="project-badge-float">${item.tags[0] || 'Frontend'}</span>
-          <button class="thumbnail-expand-btn btn-open-gallery" data-gallery-index="${originalIdx}" title="View in Gallery">
+          <span class="project-badge-float">${escapeHtml(item.tags[0] || 'Frontend')}</span>
+          <button class="thumbnail-expand-btn btn-open-gallery" data-gallery-index="${originalIdx}" title="View in Gallery" aria-label="View gallery for ${escapeHtml(item.title)}">
             <i class="fas fa-expand-alt"></i>
           </button>
         </div>
         <div class="project-body">
-          <h3 class="project-title">${item.title}</h3>
-          <p class="project-desc">${item.desc}</p>
+          <h3 class="project-title">${escapeHtml(item.title)}</h3>
+          <p class="project-desc">${escapeHtml(item.desc)}</p>
           <div class="tech-tags" style="margin-bottom: 1.25rem;">
-            ${item.tags.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+            ${item.tags.map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('')}
           </div>
           <div class="project-footer">
             <div class="project-links">
@@ -534,31 +675,67 @@ function initPortfolio() {
       </div>`;
     }).join('');
 
-    // Re-attach spotlight tracking to new cards
-    initCardInteractions();
+    // Load More / Show Less controls
+    if (loadMoreContainer) {
+      if (filtered.length > ITEMS_PER_PAGE) {
+        if (visibleCount < filtered.length) {
+          const remaining = filtered.length - visibleCount;
+          loadMoreContainer.innerHTML = `
+            <button class="btn-primary" id="btn-show-more" style="padding: 0.85rem 2.25rem; font-size: 1rem; border-radius: 50px; display: inline-flex; align-items: center; gap: 0.65rem; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+              <i class="fas fa-angles-down"></i> Show More Projects (${remaining} more)
+            </button>
+          `;
+          const btnShowMore = document.getElementById('btn-show-more');
+          if (btnShowMore) {
+            btnShowMore.addEventListener('click', () => {
+              visibleCount += ITEMS_PER_PAGE;
+              render();
+            });
+          }
+        } else {
+          loadMoreContainer.innerHTML = `
+            <button class="btn-secondary" id="btn-show-less" style="padding: 0.85rem 2.25rem; font-size: 1rem; border-radius: 50px; display: inline-flex; align-items: center; gap: 0.65rem; cursor: pointer;">
+              <i class="fas fa-angles-up"></i> Show Less
+            </button>
+          `;
+          const btnShowLess = document.getElementById('btn-show-less');
+          if (btnShowLess) {
+            btnShowLess.addEventListener('click', () => {
+              visibleCount = ITEMS_PER_PAGE;
+              render();
+              document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+            });
+          }
+        }
+      } else {
+        loadMoreContainer.innerHTML = '';
+      }
+    }
   }
 
   filterPills.forEach(pill => {
     pill.addEventListener('click', () => {
       filterPills.forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
-      activeCategory = pill.getAttribute('data-filter');
+      activeCategory = pill.getAttribute('data-filter') || 'all';
+      visibleCount = ITEMS_PER_PAGE;
       render();
     });
   });
 
   if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
+    searchInput.addEventListener('input', debounce((e) => {
       searchQuery = e.target.value.toLowerCase().trim();
+      visibleCount = ITEMS_PER_PAGE;
       render();
-    });
+    }, 150));
   }
 
   render();
 }
 
 /* ==========================================================================
-   5. Interactive Project Gallery Modal (Same Project Photos Slider)
+   5. Interactive Project Gallery Modal (Single Project Photos Slider)
    ========================================================================== */
 let currentProjectIdx = 0;
 let currentPhotoIdx = 0;
@@ -572,11 +749,13 @@ function initGalleryModal() {
 
   const titleEl = document.getElementById('gallery-title');
   const badgeEl = document.getElementById('gallery-badge');
-  const imgEl = document.getElementById('gallery-img');
   const descEl = document.getElementById('gallery-desc');
   const tagsEl = document.getElementById('gallery-tags');
-  const linksEl = document.getElementById('gallery-links');
-  const thumbsRow = document.getElementById('gallery-thumbs');
+  const imgEl = document.getElementById('gallery-active-img');
+  const thumbsRow = document.getElementById('gallery-thumbs-row');
+  const counterEl = document.getElementById('gallery-counter');
+  const liveLinkBtn = document.getElementById('gallery-live-link');
+  const codeLinkBtn = document.getElementById('gallery-code-link');
 
   if (!modal) return;
 
@@ -597,12 +776,16 @@ function initGalleryModal() {
     const activePhotoSrc = photos[currentPhotoIdx];
 
     if (imgEl) {
-      imgEl.style.opacity = '0.5';
+      imgEl.style.opacity = '0.4';
       imgEl.src = activePhotoSrc;
       imgEl.alt = `${item.title} - Photo ${currentPhotoIdx + 1}`;
-      setTimeout(() => {
-        if (imgEl) imgEl.style.opacity = '1';
-      }, 100);
+      imgEl.onload = () => {
+        imgEl.style.opacity = '1';
+      };
+    }
+
+    if (counterEl) {
+      counterEl.textContent = `${currentPhotoIdx + 1} / ${photos.length}`;
     }
 
     if (thumbsRow) {
@@ -610,6 +793,7 @@ function initGalleryModal() {
       allThumbs.forEach((tBtn, tIdx) => {
         if (tIdx === currentPhotoIdx) {
           tBtn.classList.add('active');
+          tBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         } else {
           tBtn.classList.remove('active');
         }
@@ -630,34 +814,33 @@ function initGalleryModal() {
     if (descEl) descEl.textContent = item.desc;
 
     if (tagsEl) {
-      tagsEl.innerHTML = item.tags.map(t => `<span class="tech-tag">${t}</span>`).join('');
+      tagsEl.innerHTML = item.tags.map(t => `<span class="tech-tag">${escapeHtml(t)}</span>`).join('');
     }
 
-    // Toggle arrow visibility based on photo count of current project
     if (photos.length > 1) {
       if (prevBtn) prevBtn.style.display = 'flex';
       if (nextBtn) nextBtn.style.display = 'flex';
+      if (counterEl) counterEl.style.display = 'inline-block';
     } else {
       if (prevBtn) prevBtn.style.display = 'none';
       if (nextBtn) nextBtn.style.display = 'none';
+      if (counterEl) counterEl.style.display = 'none';
     }
 
-    // Populate thumbnail strip
     if (thumbsRow) {
       if (photos.length > 1) {
         thumbsRow.style.display = 'flex';
         thumbsRow.innerHTML = photos.map((gImg, gIdx) => `
-          <button class="gallery-thumb-btn ${gIdx === 0 ? 'active' : ''}" data-photo-idx="${gIdx}" title="Photo ${gIdx + 1} of ${photos.length}">
-            <img src="${gImg}" alt="Screenshot ${gIdx + 1}" />
+          <button class="gallery-thumb-btn ${gIdx === 0 ? 'active' : ''}" data-photo-idx="${gIdx}" title="Photo ${gIdx + 1} of ${photos.length}" aria-label="Photo ${gIdx + 1}">
+            <img src="${gImg}" alt="${escapeHtml(item.title)} thumbnail ${gIdx + 1}" width="80" height="50" loading="lazy" decoding="async">
           </button>
         `).join('');
 
         thumbsRow.querySelectorAll('.gallery-thumb-btn').forEach(tBtn => {
-          tBtn.addEventListener('click', () => {
+          tBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             const pIdx = parseInt(tBtn.getAttribute('data-photo-idx'), 10);
-            if (!isNaN(pIdx)) {
-              setPhoto(pIdx);
-            }
+            if (!isNaN(pIdx)) setPhoto(pIdx);
           });
         });
       } else {
@@ -666,19 +849,25 @@ function initGalleryModal() {
       }
     }
 
-    if (linksEl) {
-      let linksHtml = '';
+    if (liveLinkBtn) {
       if (item.previewLink && item.previewLink !== '#') {
-        linksHtml += `<a href="${item.previewLink}" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 0.5rem 1.15rem; font-size: 0.85rem;"><i class="fas fa-external-link-alt"></i> Live Demo</a>`;
+        liveLinkBtn.href = item.previewLink;
+        liveLinkBtn.style.display = 'inline-flex';
+      } else {
+        liveLinkBtn.style.display = 'none';
       }
+    }
+
+    if (codeLinkBtn) {
       if (item.codeLink && item.codeLink !== '#') {
-        linksHtml += `<a href="${item.codeLink}" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="padding: 0.5rem 1.15rem; font-size: 0.85rem;"><i class="fab fa-github"></i> Source Code</a>`;
+        codeLinkBtn.href = item.codeLink;
+        codeLinkBtn.style.display = 'inline-flex';
+      } else {
+        codeLinkBtn.style.display = 'none';
       }
-      linksEl.innerHTML = linksHtml;
     }
 
     setPhoto(0);
-
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -688,7 +877,7 @@ function initGalleryModal() {
     document.body.style.overflow = '';
   }
 
-  // Delegated click listener for all gallery triggers (cards & thumbnails)
+  // Delegated click listener for all gallery triggers
   document.addEventListener('click', (e) => {
     const trigger = e.target.closest('.btn-open-gallery');
     if (trigger) {
@@ -706,7 +895,6 @@ function initGalleryModal() {
     if (e.target === modal) closeModal();
   });
 
-  // Left and Right arrows slide photos of the SAME project
   if (prevBtn) {
     prevBtn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -721,7 +909,6 @@ function initGalleryModal() {
     });
   }
 
-  // Keyboard navigation slides photos of the same project
   document.addEventListener('keydown', (e) => {
     if (!modal.classList.contains('active')) return;
     if (e.key === 'Escape') closeModal();
@@ -731,23 +918,31 @@ function initGalleryModal() {
 }
 
 /* ==========================================================================
-   5. 3D Tilt & Spotlight Card Interactions
+   6. 3D Tilt & Spotlight Card Interactions (Delegated & GPU Accelerated)
    ========================================================================== */
 function initCardInteractions() {
-  const cards = document.querySelectorAll('.spotlight-card');
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
-    });
-  });
+  let isTicking = false;
+
+  document.addEventListener('pointermove', (e) => {
+    const card = e.target.closest('.spotlight-card');
+    if (!card) return;
+
+    if (!isTicking) {
+      requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, { passive: true });
 }
 
 /* ==========================================================================
-   6. Navigation & Scroll Spy
+   7. Navigation & Scroll Spy
    ========================================================================== */
 function initNavigation() {
   const navLinks = document.querySelectorAll('.nav-link');
@@ -778,26 +973,28 @@ function initNavigation() {
   }
 
   // ScrollSpy with IntersectionObserver
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        navLinks.forEach(link => {
-          if (link.getAttribute('href') === `#${id}`) {
-            link.classList.add('active');
-          } else {
-            link.classList.remove('active');
-          }
-        });
-      }
-    });
-  }, { threshold: 0.3 });
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            if (link.getAttribute('href') === `#${id}`) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, { threshold: 0.3 });
 
-  sections.forEach(sec => observer.observe(sec));
+    sections.forEach(sec => observer.observe(sec));
+  }
 }
 
 /* ==========================================================================
-   7. Timeline & Tab Switcher
+   8. Timeline & Tab Switcher
    ========================================================================== */
 function initTimelineTabs() {
   const tabBtns = document.querySelectorAll('.tab-btn');
@@ -824,7 +1021,7 @@ function initTimelineTabs() {
 }
 
 /* ==========================================================================
-   8. Theme & Accent Customizer
+   9. Theme & Accent Customizer
    ========================================================================== */
 function initThemeCustomizer() {
   const themeToggle = document.getElementById('theme-toggle');
@@ -885,7 +1082,7 @@ function initThemeCustomizer() {
 }
 
 /* ==========================================================================
-   9. Copy to Clipboard Helper
+   10. Copy to Clipboard Helper
    ========================================================================== */
 function initClipboardHelpers() {
   document.querySelectorAll('.copy-btn').forEach(btn => {
@@ -903,13 +1100,12 @@ function initClipboardHelpers() {
 }
 
 /* ==========================================================================
-   10. EmailJS Contact Form
+   11. EmailJS Contact Form
    ========================================================================== */
 function initContactForm() {
   const form = document.getElementById('contact-form');
   if (!form) return;
 
-  // Initialize EmailJS with preserved Public Key
   if (window.emailjs) {
     emailjs.init("D8WQgXq4zS_0Inmo7");
   }

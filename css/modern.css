@@ -1889,3 +1889,37 @@ button, input, textarea { font-family: inherit; }
     height: 34px;
   }
 }
+
+/* ==========================================================================
+   High-Performance Rendering & Core Web Vitals Optimizations
+   ========================================================================== */
+.about-section,
+.experience-section,
+.skills-section,
+.portfolio-section,
+.services-section,
+.contact-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 750px;
+}
+
+.project-img,
+.profile-img {
+  content-visibility: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  #ambient-canvas {
+    display: none !important;
+  }
+}

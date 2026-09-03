@@ -507,7 +507,7 @@ const portfolioItems = [
     image: 'images/thumb/project-1.webp',
     categories: ['frontend'],
     tags: ['HTML5', 'CSS3', 'JavaScript', 'Responsive'],
-    previewLink: 'https://rezk55.github.io/R-Mealify/',
+    previewLink: 'https://rezcoder55.github.io/R-Mealify/',
     codeLink: ''
   },
   {
@@ -516,7 +516,7 @@ const portfolioItems = [
     image: 'images/thumb/project-2.webp',
     categories: ['frontend'],
     tags: ['JavaScript', 'Sass', 'CSS Grid'],
-    previewLink: 'https://rezk55.github.io/TheGarage/',
+    previewLink: 'https://rezcoder55.github.io/TheGarage/',
     codeLink: ''
   },
   {
@@ -525,7 +525,7 @@ const portfolioItems = [
     image: 'images/thumb/project-3.webp',
     categories: ['frontend'],
     tags: ['HTML5', 'CSS3', 'JavaScript'],
-    previewLink: 'https://rezk55.github.io/Furniture/',
+    previewLink: 'https://rezcoder55.github.io/Furniture/',
     codeLink: ''
   },
   {
@@ -534,7 +534,7 @@ const portfolioItems = [
     image: 'images/thumb/project-4.webp',
     categories: ['frontend'],
     tags: ['JavaScript', 'CSS3 Animations', 'Bootstrap'],
-    previewLink: 'https://rezk55.github.io/DeFolio/',
+    previewLink: 'https://rezcoder55.github.io/DeFolio/',
     codeLink: ''
   },
   {
@@ -543,7 +543,7 @@ const portfolioItems = [
     image: 'images/thumb/project-9.webp',
     categories: ['frontend'],
     tags: ['JavaScript', 'Sass', 'Responsive'],
-    previewLink: 'https://rezk55.github.io/daniels/',
+    previewLink: 'https://rezcoder55.github.io/daniels/',
     codeLink: ''
   },
   {
@@ -552,7 +552,7 @@ const portfolioItems = [
     image: 'images/thumb/project-5.webp',
     categories: ['apis', 'fullstack', 'frontend'],
     tags: ['Vue.js', 'REST APIs', 'Axios', 'State Management'],
-    previewLink: 'https://rezk55.github.io/TodoAndBlog/',
+    previewLink: 'https://rezcoder55.github.io/TodoAndBlog/',
     codeLink: ''
   },
   {
@@ -561,7 +561,7 @@ const portfolioItems = [
     image: 'images/thumb/project-7.webp',
     categories: ['fullstack', 'apis'],
     tags: ['Vue.js', 'Laravel API', 'REST', 'Tailwind'],
-    previewLink: 'https://rezk55.github.io/TodoApp/',
+    previewLink: 'https://rezcoder55.github.io/TodoApp/',
     codeLink: ''
   },
   {
@@ -570,7 +570,7 @@ const portfolioItems = [
     image: 'images/thumb/project-10.webp',
     categories: ['apis', 'frontend'],
     tags: ['JavaScript', 'Weather API', 'Async/Await'],
-    previewLink: 'https://rezk55.github.io/weather/',
+    previewLink: 'https://rezcoder55.github.io/weather/',
     codeLink: ''
   },
   {
@@ -579,7 +579,7 @@ const portfolioItems = [
     image: 'images/thumb/project-12.webp',
     categories: ['apis', 'frontend'],
     tags: ['JavaScript', 'MealDB API', 'Sass'],
-    previewLink: 'https://rezk55.github.io/yummy/',
+    previewLink: 'https://rezcoder55.github.io/yummy/',
     codeLink: ''
   },
   {
@@ -588,7 +588,7 @@ const portfolioItems = [
     image: 'images/thumb/project-11.webp',
     categories: ['frontend'],
     tags: ['Algorithms', 'Data Structures', 'JavaScript Canvas'],
-    previewLink: 'https://rezk55.github.io/binarySearchJS/',
+    previewLink: 'https://rezcoder55.github.io/binarySearchJS/',
     codeLink: ''
   }
 ];

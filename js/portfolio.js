@@ -73,35 +73,35 @@ const portfolio = [
         title: "Mealify, Delicious",
         image: "images/thumb/project-1.webp",
         category: ["category-frontend"],
-        previewLink: "https://rezk55.github.io/R-Mealify/",
+        previewLink: "https://rezcoder55.github.io/R-Mealify/",
         codeLink: ""
     },
     {
         title: "shop car",
         image: "images/thumb/project-2.webp",
         category: ["category-frontend"],
-        previewLink: "https://rezk55.github.io/TheGarage/",
+        previewLink: "https://rezcoder55.github.io/TheGarage/",
         codeLink: ""
     },
     {
         title: "choose your Furniture",
         image: "images/thumb/project-3.webp",
         category: ["category-frontend"],
-        previewLink: "https://rezk55.github.io/Furniture/",
+        previewLink: "https://rezcoder55.github.io/Furniture/",
         codeLink: ""
     },
     {
         title: "DeFolio",
         image: "images/thumb/project-4.webp",
         category: ["category-frontend"],
-        previewLink: "https://rezk55.github.io/DeFolio/",
+        previewLink: "https://rezcoder55.github.io/DeFolio/",
         codeLink: ""
     },
     {
         title: "Daniels",
         image: "images/thumb/project-9.webp",
         category: ["category-frontend"],
-        previewLink: "https://rezk55.github.io/daniels/",
+        previewLink: "https://rezcoder55.github.io/daniels/",
         codeLink: ""
     },
     {
@@ -115,42 +115,42 @@ const portfolio = [
         title: "TodoList",
         image: "images/thumb/project-5.webp",
         category: ["category-apis"],
-        previewLink: "https://rezk55.github.io/TodoAndBlog/",
+        previewLink: "https://rezcoder55.github.io/TodoAndBlog/",
         codeLink: ""
     },
     {
         title: "Blog",
         image: "images/thumb/project-6.webp",
         category: ["category-apis"],
-        previewLink: "https://rezk55.github.io/TodoAndBlog/",
+        previewLink: "https://rezcoder55.github.io/TodoAndBlog/",
         codeLink: ""
     },
     {
         title: "My List(Vue and Laravel)",
         image: "images/thumb/project-7.webp",
         category: ["category-backend", "category-apis"],
-        previewLink: "https://rezk55.github.io/TodoApp/",
+        previewLink: "https://rezcoder55.github.io/TodoApp/",
         codeLink: ""
     },
     {
         title: "Your Weather",
         image: "images/thumb/project-10.webp",
         category: ["category-apis"],
-        previewLink: "https://rezk55.github.io/weather/",
+        previewLink: "https://rezcoder55.github.io/weather/",
         codeLink: ""
     },
     {
         title: "yummy",
         image: "images/thumb/project-12.webp",
         category: ["category-apis"],
-        previewLink: "https://rezk55.github.io/yummy/",
+        previewLink: "https://rezcoder55.github.io/yummy/",
         codeLink: ""
     },
     {
         title: "Binary Search in behind the scenes",
         image: "images/thumb/project-11.webp",
         category: [],
-        previewLink: "https://rezk55.github.io/binarySearchJS/",
+        previewLink: "https://rezcoder55.github.io/binarySearchJS/",
         codeLink: ""
     }
 ];

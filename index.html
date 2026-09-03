@@ -1259,40 +1259,43 @@
               Project Preview
             </h3>
           </div>
-          <button
-            class="gallery-modal-close"
-            id="gallery-close-btn"
-            aria-label="Close Gallery Modal"
-          >
-            <i class="fas fa-times"></i>
-          </button>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span id="gallery-counter" class="gallery-counter-badge" style="font-size: 0.85rem; padding: 0.25rem 0.65rem; background: rgba(255,255,255,0.08); border: 1px solid var(--border-glass); border-radius: 20px; color: var(--text-muted); display: none;"></span>
+            <button
+              class="gallery-modal-close"
+              id="gallery-close-btn"
+              aria-label="Close Gallery Modal"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
         </div>
 
         <div class="gallery-stage">
           <button
             class="gallery-nav-btn gallery-btn-prev"
             id="gallery-prev-btn"
-            aria-label="Previous Project"
+            aria-label="Previous Photo"
           >
             <i class="fas fa-chevron-left"></i>
           </button>
           <img
             src=""
             alt="Project Preview"
-            id="gallery-img"
+            id="gallery-active-img"
             class="gallery-preview-img"
           />
           <button
             class="gallery-nav-btn gallery-btn-next"
             id="gallery-next-btn"
-            aria-label="Next Project"
+            aria-label="Next Photo"
           >
             <i class="fas fa-chevron-right"></i>
           </button>
         </div>
         <div
           class="gallery-thumbs-row"
-          id="gallery-thumbs"
+          id="gallery-thumbs-row"
           style="display: none"
         ></div>
 
@@ -1302,8 +1305,27 @@
           </p>
           <div class="tech-tags" id="gallery-tags"></div>
           <div class="gallery-modal-actions">
-            <div style="display: flex; gap: 0.75rem" id="gallery-links">
-              <!-- Dynamic action buttons rendered here -->
+            <div style="display: flex; gap: 0.75rem; align-items: center;" id="gallery-links">
+              <a
+                href="#"
+                id="gallery-live-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-project-action"
+                style="display: none;"
+              >
+                <i class="fas fa-external-link-alt"></i> Live Demo
+              </a>
+              <a
+                href="#"
+                id="gallery-code-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-project-action"
+                style="display: none;"
+              >
+                <i class="fab fa-github"></i> View Code
+              </a>
             </div>
             <button
               class="btn-secondary"

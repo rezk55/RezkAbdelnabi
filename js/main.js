@@ -751,8 +751,8 @@ function initGalleryModal() {
   const badgeEl = document.getElementById('gallery-badge');
   const descEl = document.getElementById('gallery-desc');
   const tagsEl = document.getElementById('gallery-tags');
-  const imgEl = document.getElementById('gallery-active-img');
-  const thumbsRow = document.getElementById('gallery-thumbs-row');
+  const imgEl = document.getElementById('gallery-active-img') || document.getElementById('gallery-img');
+  const thumbsRow = document.getElementById('gallery-thumbs-row') || document.getElementById('gallery-thumbs');
   const counterEl = document.getElementById('gallery-counter');
   const liveLinkBtn = document.getElementById('gallery-live-link');
   const codeLinkBtn = document.getElementById('gallery-code-link');
@@ -782,6 +782,9 @@ function initGalleryModal() {
       imgEl.onload = () => {
         imgEl.style.opacity = '1';
       };
+      if (imgEl.complete && imgEl.naturalWidth !== 0) {
+        imgEl.style.opacity = '1';
+      }
     }
 
     if (counterEl) {
